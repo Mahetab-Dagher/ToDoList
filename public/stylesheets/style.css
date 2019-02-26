@@ -240,9 +240,13 @@ input[type=text]:placeholder {
 }
 
 .input{
-  width: 100%;
+  width: 100%  !important;
 }
 
 .mfooter{
   text-align: center !important;
+}
+
+.add{
+  width: 100%
 }
