@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <base href="/">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <div class="col-md-8 col-md-offset-2">
+                <form action="/users/login" method="POST">
+                    <div class="form-group">
+                        
+                        <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="form-control"
+                                formControlName="email"
+                                placeholder="email">
+                    </div>
+                    <div class="form-group">
+                        
+                        <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="form-control"
+                                formControlName="password"
+                                placeholder="password">
+                    </div>
+                    <button
+                            class="btn btn-primary"
+                            type="submit"
+                            [disabled]="!myForm.valid">login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
