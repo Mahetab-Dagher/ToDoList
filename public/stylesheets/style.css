@@ -229,3 +229,20 @@ input[type=text]:placeholder {
 *:focus {
     outline: none;
 } 
+
+.btn-close{
+  position: relative;
+    bottom: 23px;
+}
+
+.mContent{
+  width: 60%;
+}
+
+.input{
+  width: 100%;
+}
+
+.mfooter{
+  text-align: center !important;
+}

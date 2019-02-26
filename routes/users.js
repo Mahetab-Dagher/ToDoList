@@ -92,13 +92,13 @@ let comparePass = (password, user, res) =>{
   bcryptjs.compare(password, user.password, (err, match) => {
     if(match){
       var token = jwt.sign(user.toJSON(), process.env.secret)
-      res.status(200).json({
+      res.render('list', {
         token: token,
         user: user
       })
     }
     else{
-      return res.status(400).json({
+      return res.render('list',{
         message: "Incorrect password"
       })
     }

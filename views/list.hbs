@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <base href="/">
+        <meta charset="UTF-8">
+        <meta name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{{title}}</title>
+        {{!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> --}}
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+    function addItem(){
+        var name = $("#name").val();
+        var description = $("#description").val();
+        console.log(name, description)
+        $.ajax({
+            type: "POST",
+            url: "http://localhost:5000/list",
+            headers: {
+                'Authorization': `Bearer {{token}}`
+            },
+            contentType: 'application/x-www-form-urlencoded',
+            data: {name: name, description: description},
+            success: function(response) {
+                if(response.status == 400){
+                    document.getElementById('list').innerHTML = response.message
+                }
+                else{
+                    var list = response.message.todoItems
+                    var ls = ''
+                    list.forEach( (e) => {
+                        console.log(e)
+                        ls += document.getElementById('list').innerHTML = '<li class="list-group-item"> <div class="checkbox"> <input type="checkbox" id="checkbox" /> <label for="checkbox">'+ e.name +' </label> <p> <small> '+ e.description +' </small> <p> </div> </li> '
+                    })
+                    document.getElementById('list').innerHTML = ls
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.responseJSON)
+                document.getElementById('list').innerHTML = jqXHR.responseJSON.message
+            },
+        });
+    }
+    $(document).ready(function() {
+        console.log(`Bearer {{token}}`)
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:5000/list",
+            headers: {
+                'Authorization': `Bearer {{token}}`
+            },
+            contentType: 'application/json',
+            success: function(response) {
+                if(response.status == 400){
+                    document.getElementById('list').innerHTML = response.message
+                }
+                else{
+                    var list = response.message.todoItems
+                    var ls = ''
+                    list.forEach( (e) => {
+                        console.log(e)
+                        ls += document.getElementById('list').innerHTML = '<li class="list-group-item"> <div class="checkbox"> <input type="checkbox" id="checkbox" /> <label for="checkbox">'+ e.name +' </label> <p> <small> '+ e.description +' </small> <p> </div> </li> '
+                    })
+                    document.getElementById('list').innerHTML = ls
+                }
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR.responseJSON)
+                document.getElementById('list').innerHTML = jqXHR.responseJSON.message
+            },
+        });
+    });
+    </script>
+
+    </head>
+    <body>
+    <div class="container">
+        {{!-- <div class="modal" id="modalLoginForm" tabindex="-1" role="form" aria-labelledby="myModalLabel"
+        aria-hidden="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Add todo Item</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                <form action="/list" method="POST">
+                    <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="text" name="name" id="defaultForm-email" class="form-control validate" placeholder="name">
+                    
+                    </div>
+
+                    <div class="md-form mb-4">
+                    <i class="fas fa-lock prefix grey-text"></i>
+                    <input type="text" name="description" id="defaultForm-pass" class="form-control validate" placeholder="description">
+                    
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                    <button class="btn btn-default" >Add</button>
+                    </div>
+                </form>
+            </div>
+            
+            </div>
+        </div>
+        </div> --}}
+
+  
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-list">
+                            My ToDo list
+                        </span>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group" id='list'>
+                        </ul>
+                    </div>
+                </div>
+                <button
+                    class="btn btn-primary"
+                    type="submit"
+                    data-toggle="modal"
+                    data-target=".bd-example-modal-lg">
+
+                <i class="glyphicon glyphicon-plus"></i>
+                </button>
+                
+            </div>
+        </div>
+    </div>
+
+      <div class="modal fade bd-example-modal-lg" tabindex="0" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+        <div class="modal-content mContent">
+            <div class="modal-header bg-primary text-center">
+                <h4 class="modal-title w-100 font-weight-bold">Add todo Item</h4>
+                <button type="button" class="close btn-close btn-light" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mx-3">
+                
+                    <div class="md-form mb-5">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <input type="text" name="name" id="name" class="form-control validate input" placeholder="name">
+                    
+                    </div>
+
+                    <div class="md-form mb-4">
+                    <i class="fas fa-lock prefix grey-text"></i>
+                    <input type="text" name="description" id="description" class="form-control validate input" placeholder="description">
+                    
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center mfooter">
+                    <button class="btn btn-default" onclick="addItem()">Add</button>
+                    </div>
+               
+            </div>
+            
+        </div>
+  </div>
+</div>
+    </body>
+</html>

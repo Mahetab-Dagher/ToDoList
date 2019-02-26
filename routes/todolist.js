@@ -6,11 +6,11 @@ var TodoList = require('../models/todoList')
 router.get('/', jwt({
     secret: process.env.secret
 }), (req, res) => {
-    console.log(req.user)
+    console.log('ru', req.user)
     TodoList.findOne({userId: req.user._id}, (err, list) => {
         if(err || !list){
             return res.status(400).json({
-                message: err || "todo list not found"
+                message: err || "todo list is empty"
             })
         }
         else{
@@ -25,6 +25,7 @@ router.post('/', jwt({
     secret: process.env.secret
 }), (req, res) => {
     let item = req.body
+    console.log(item)
     TodoList.findOneAndUpdate({userId: req.user._id}, { $push: {todoItems: item}}, {new: true}, (err, list) => {
         if(err){
             return res.status(400).json({
